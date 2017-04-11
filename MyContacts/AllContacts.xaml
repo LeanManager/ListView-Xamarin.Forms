@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	         xmlns:local="clr-namespace:MyContacts;assembly=MyContacts"
+	         x:Class="MyContacts.AllContacts"
+	         Title="Contacts"
+	         BindingContext="{x:Static local:SimpsonFactory.Characters}"
+	         Padding="5,0,5,5">	 
+
+	<ContentPage.Resources>
+        <ResourceDictionary>           
+            <local:ImageResourceConverter x:Key="imageResourceCvt" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+	
+	<ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="editButton" Text="Edit" Clicked="OnEdit" />
+    </ContentPage.ToolbarItems>
+
+	
+    <ListView x:Name="allContacts"		     
+		      IsPullToRefreshEnabled="True"
+		      Refreshing="OnRefreshing"
+		      ItemsSource="{Binding .}"
+		      ItemTapped="OnItemTapped"
+		      ItemSelected="OnItemSelected">
+
+		<ListView.ItemTemplate>
+             <DataTemplate>
+                  <ImageCell Text="{Binding Name}"
+                             Detail="{Binding Email}" 
+                             DetailColor="Gray"
+				             ImageSource="{Binding HeadshotUrl, Converter={StaticResource imageResourceCvt}}"/>
+				            
+             </DataTemplate>
+        </ListView.ItemTemplate>
+		
+    </ListView>
+
+	
+</ContentPage>
